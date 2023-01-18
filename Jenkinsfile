@@ -13,9 +13,24 @@ pipeline {
     }
     agent any
     stages {
-        stage('build') {
+
+        stage ('Prep'){
+            steps{
+                checkout scm
+            }
+        }
+        stage ('Build'){
+            steps{
+                script{
+                    if (fileExists(my-code.c)) == false){
+                    }
+                }
+            }
+        }
+        stage('Deploy') {
+            when {not {equals expected : 'UNSTABLE'}}
             steps {
-                sh 'mvn --version'
+                echo 'Deploying software'
             }
         }
 
