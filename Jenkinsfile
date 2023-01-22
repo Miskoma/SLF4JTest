@@ -13,7 +13,7 @@ node {
 
      stage('Deliver') {
         steps {
-            sh './jenkins/scripts/deliver.jar'
+            bat './jenkins/scripts/deliver.jar'
         }
      }
   }
