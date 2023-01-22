@@ -12,12 +12,12 @@ node {
       bat "./mvnw test -Punit"
     }
 
-    stage('Publish'){
-        steps{
+    stage('Publish') {
+        steps {
             bat "./mvnw package"
         }
         post{
-            success{
+            success {
                 archiveArtifacts 'target/*.jar'
             }
         }
