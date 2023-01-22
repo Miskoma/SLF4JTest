@@ -6,23 +6,15 @@ node {
   stage("Compilation") {
     bat "./mvnw clean install -DskipTests"
   }
-  stage('Publish') {
-          steps {
-              bat "./mvnw package"
-          }
-          post{
-              success {
-                  archiveArtifacts 'target/*.jar'
-              }
-          }
-  }
   stage("Tests and Deployment") {
     stage("Runing unit tests") {
       bat "./mvnw test -Punit"
     }
 
-    stage("Deployment") {
-      bat 'nohup ./mvnw spring-boot:run -Dserver.port=8001 &'
-    }
+     stage('Deliver') {
+        steps {
+            sh './jenkins/scripts/deliver.jar'
+        }
+     }
   }
 }
