@@ -1,43 +1,18 @@
-pipeline {
+node {
+  stage("Clone the project") {
+    git branch: 'main', url: 'https://github.com/Miskoma/SLF4JTest'
+  }
 
-    environment{
+  stage("Compilation") {
+    sh "./mvnw clean install -DskipTests"
+  }
 
+  stage("Tests and Deployment") {
+    stage("Runing unit tests") {
+      sh "./mvnw test -Punit"
     }
-
-    tools{
-
+    stage("Deployment") {
+      sh 'nohup ./mvnw spring-boot:run -Dserver.port=8001 &'
     }
-
-    options{
-        disableConcurrentBuild()
-    }
-    agent any
-    stages {
-
-        stage ('Prep'){
-            steps{
-                checkout scm
-            }
-        }
-        stage ('Build'){
-            steps{
-                script{
-                    if (fileExists(my-code.c)) == false){
-                    }
-                }
-            }
-        }
-        stage('Deploy') {
-            when {not {equals expected : 'UNSTABLE'}}
-            steps {
-                echo 'Deploying software'
-            }
-        }
-
-        stage('deploy'){
-
-
-
-        }
-    }
+  }
 }
