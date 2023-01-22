@@ -14,7 +14,7 @@ node {
 
     stage('Publish'){
         steps{
-            bat './mvnw package'
+            bat "./mvnw package"
         }
         post{
             success{
@@ -22,7 +22,7 @@ node {
             }
         }
     }
-    
+
     stage("Deployment") {
       bat 'nohup ./mvnw spring-boot:run -Dserver.port=8001 &'
     }
