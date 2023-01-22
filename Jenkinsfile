@@ -11,6 +11,18 @@ node {
     stage("Runing unit tests") {
       bat "./mvnw test -Punit"
     }
+
+    stage('Publish'){
+        steps{
+            bat './mvnw package'
+        }
+        post{
+            success{
+                archiveArtifacts 'target/*.jar'
+            }
+        }
+    }
+    
     stage("Deployment") {
       bat 'nohup ./mvnw spring-boot:run -Dserver.port=8001 &'
     }
