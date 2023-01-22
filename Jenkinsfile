@@ -10,9 +10,5 @@ node {
     stage("Runing unit tests") {
       bat "./mvnw test -Punit"
     }
-
-     stage('Deliver') {
-            sh './jenkins/scripts/deliver.sh'
-     }
   }
 }
